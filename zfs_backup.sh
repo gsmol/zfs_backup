@@ -70,9 +70,8 @@ touch $lock
 
 zfs list -t snapshot -d 2 -o name -r -H $farm/$local_set/$remote_set | sort | grep $farm/$local_set/$remote_set > /dev/null 2>&1
 if [[ $? -ne 0 ]]
-tnen 
-#there is no snapshots on local dataset. Its going to be a full backup
-full="true"
+then 
+full="true" #there is no snapshots on local dataset. Its going to be a full backup
 fi
 
 #1. Check snapshots existence on remote
@@ -82,8 +81,7 @@ then
 ssh $user@$host -p $port -o StrictHostKeyChecking=no zfs list -t snapshot -o name | sort | grep $remote_set > /dev/null 2>&1
   if [[ $? -ne 0 ]]
   then 
-  #there is no snapshots on remote dataset. Its going to be a full backup
-  full="true"
+  full="true" #there is no snapshots on remote dataset. Its going to be a full backup
   fi
 fi
 
